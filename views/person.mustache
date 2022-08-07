@@ -1,0 +1,24 @@
+<html>
+<head></head>
+<body>
+<h1> Persons </h1>
+
+
+<ul>
+{{#person}}
+    <li>
+        {{name}} - {{age}}
+    </li>
+{{/person}}
+{{^person}}
+    no persons exist
+{{/person}}
+</ul>
+
+
+</body>
+
+
+
+
+</html>
