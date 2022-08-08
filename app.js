@@ -3,18 +3,23 @@ const app = express()
 const PORT = 4500
 const mustacheExpress=require('mustache-express')
 const bodyParser=require('body-parser')
+const path = require('path') // allows reference to other pages
 
-app.use(bodyParser.urlencoded({extended : false}))
+const VIEWS_PATH = path.join(__dirname, '/views')
+
+app.use('/css', express.static('css'))
+
 
 
 //tell the app to use the engine for template viewing and running. 
-app.engine('mustache', mustacheExpress())
+app.engine('mustache', mustacheExpress(VIEWS_PATH + '/partials', '.mustache'))
 // set the views by what they are and where they are.
-app.set('views', './views')
+app.set('views', VIEWS_PATH)
 // set the engine and the template type being used
 app.set('view engine', 'mustache')
 
-
+// url encoded set to false so objects cannot be passed in the input field and to the network
+app.use(bodyParser.urlencoded({extended : false}))
 
 
 app.get('/' , (req,res) =>{
@@ -66,9 +71,7 @@ app.post('/add-user' ,(req,res) => {
     let age = req.body.age;
     console.log(name)
     console.log(age)
-    // if(name.length > 0) {
-    //     res.render('add-user', { name : req.body})
-    // }
+
     res.status(200).send()
 })
 
